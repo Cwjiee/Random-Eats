@@ -4,13 +4,13 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDcs5NP4TT0d8EvkIfEOsu-sHX4m4bY1KU",
-  authDomain: "makan-mana-25ff6.firebaseapp.com",
-  projectId: "makan-mana-25ff6",
-  storageBucket: "makan-mana-25ff6.appspot.com",
-  messagingSenderId: "157955525025",
-  appId: "1:157955525025:web:42b0d392b37cb7e01e63e0",
-  measurementId: "G-8T0K7R1EX0"
+  apiKey: "AIzaSyAh-FH6aj1A4aTolHnX_d4HaBqplRRApGQ",
+  authDomain: "where-to-eat-4cbb5.firebaseapp.com",
+  projectId: "where-to-eat-4cbb5",
+  storageBucket: "where-to-eat-4cbb5.appspot.com",
+  messagingSenderId: "631384321097",
+  appId: "1:631384321097:web:33d49bf36eb83d1b97a398",
+  measurementId: "G-9J3WXMJ0MT"
 };
 
 const app = initializeApp(firebaseConfig);

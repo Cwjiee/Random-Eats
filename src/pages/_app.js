@@ -4,9 +4,9 @@ import Layout from "@/components/Layout";
 export default function App({ Component, pageProps }) {
   return (
     <ChakraProvider>
-      <Layout />
+      <Layout>
         <Component {...pageProps} />
-      <Layout />
+      </Layout>
     </ChakraProvider>
   );
 }
