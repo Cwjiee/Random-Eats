@@ -2,7 +2,6 @@ import {
   Box,
   UnorderedList,
   ListItem,
-  Link,
   Button,
   Flex,
   VStack,
@@ -17,8 +16,6 @@ import {
   TabPanels,
   TabPanel,
 } from "@chakra-ui/react";
-import Navbar from "@/components/Navbar";
-import Fuse from "fuse.js";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { apiHandler } from "@/utils/apiHandler";
@@ -28,8 +25,14 @@ import Searchbar from "@/components/Searchbar";
 
 export default function List() {
   const [user, loading, error] = useAuthState(auth);
+  const [name, setName] = useState("");
   const toast = useToast();
-  const name = user.displayName;
+  
+  useEffect(() => {
+    if (user) {
+      setName(user.displayName);
+    }
+  }, [user]);
 
   const [halal, setHalal] = useState("false");
   const [restaurants, setRestaurants] = useState("");
@@ -70,7 +73,7 @@ export default function List() {
       const response = await apiHandler.getUserChoices(user.uid);
       setChoices(response);
     })();
-  }, []);
+  }, [user.uid]);
 
   return (
     <>

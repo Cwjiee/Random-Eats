@@ -44,7 +44,7 @@ export const apiHandler = (() => {
         doc(db, "restaurants", choice.id)
       );
       console.log(restaurantSnapshot)
-      
+
       const userSnapshot = await getDoc(doc(db, "users", user.id));
       const userRestaurants =
         userSnapshot.data() === undefined ||
@@ -105,6 +105,12 @@ export const apiHandler = (() => {
     }
   };
 
+  const getRestaurantFromId = async (id) => {
+
+    const restaurantSnapshot = await getDoc(doc(db, "restaurants", id));
+    return restaurantSnapshot.data();
+  }
+
   const getUsers = async () => {
     const q = query(collection(db, "users"));
     const results = await getDocs(q);
@@ -133,5 +139,6 @@ export const apiHandler = (() => {
     getUserChoicesByName,
     getRestaurants,
     addExistingChoice,
+    getRestaurantFromId
   };
 })();

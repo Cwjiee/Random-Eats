@@ -21,10 +21,6 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
   };
   const fuse = new Fuse(allRestaurants, fuseOptions);
 
-  const search = () => {
-    setSearchResult(fuse.search(restaurants));
-  };
-
   const handleClick = (e) => {
     setRestaurants(e.target.innerText);
     setSearchResult([]);
@@ -42,12 +38,11 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
   },[])
 
   useEffect(() => {
-    if (restaurants === searchResult) {
-      setSearchResult([]);
-    } else {
-      search();
-    }
-  }, [restaurants]);
+    const search = () => {
+      setSearchResult(fuse.search(restaurants));
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restaurants, searchResult]);
 
   return (
     <Box w="100%" position="relative">

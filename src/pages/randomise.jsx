@@ -8,13 +8,13 @@ import {
   useToast,
   Button,
   TagCloseButton,
-  Drawer,
-  DrawerBody,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
   useDisclosure
 } from "@chakra-ui/react";
 import { apiHandler } from "@/utils/apiHandler";
@@ -58,17 +58,17 @@ export default function Randomise() {
 
   return (
     <>
-      <Drawer
+      <Modal
         isOpen={isOpen}
         placement="bottom"
         onClose={onClose}
       >
-        <DrawerOverlay />
-        <DrawerContent>
-          <DrawerCloseButton />
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
           <RandomiseResult selectedUsers={selectedUsers} />
-        </DrawerContent>
-      </Drawer>
+        </ModalContent>
+      </Modal>
       <Flex w="100%" h="75vh">
         <VStack w="50%">
           <Box fontSize={25}>Users</Box>

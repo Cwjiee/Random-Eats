@@ -2,9 +2,10 @@ import { auth } from "../../firebaseConfig";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { toast } from "@chakra-ui/react";
+import { usetoast } from "@chakra-ui/react";
 
 export default function Profile() {
+  const toast = useToast();
   const handleLogout = async () => {
     try {
       await auth.signOut();
