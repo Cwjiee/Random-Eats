@@ -3,7 +3,14 @@ import { auth } from "../../firebaseConfig";
 import { useState, useEffect } from "react";
 import router from "next/router";
 import Navbar from "@/components/Navbar";
-import { toast, Button, UnorderedList, ListItem, Box  } from "@chakra-ui/react";
+import {
+  toast,
+  Button,
+  UnorderedList,
+  ListItem,
+  Box,
+  Flex,
+} from "@chakra-ui/react";
 import { apiHandler } from "@/utils/apiHandler";
 import { v4 } from "uuid";
 
@@ -12,25 +19,28 @@ export default function Home() {
   const [choices, setChoices] = useState([]);
 
   const toListPage = () => {
-    router.push("/list")
-  }
+    router.push("/list");
+  };
+
+  const toRandomisePage = () => {
+    router.push("/randomise");
+  };
 
   useEffect(() => {
     if (!user) {
       router.push("/login");
-    } 
+    }
 
-    if (user){
-      (async ()=> {
-        const response = await apiHandler.getUserChoices(user.uid)
-        setChoices(response)
+    if (user) {
+      (async () => {
+        const response = await apiHandler.getUserChoices(user.uid);
+        setChoices(response);
       })();
-    } 
-  }, [user])
+    }
+  }, [user]);
 
   return (
     <>
-      
       <Box>
         <Box fontSize={25}>My List</Box>
         <UnorderedList>
@@ -39,15 +49,15 @@ export default function Home() {
           ))}
         </UnorderedList>
       </Box>
-      
-      <Button colorScheme='messenger' onClick={toListPage}>modify</Button>
+
+      <Flex direction="row" gap={5}>
+        <Button colorScheme="messenger" onClick={toListPage}>
+          modify
+        </Button>
+        <Button colorScheme="messenger" onClick={toRandomisePage}>
+          randomise
+        </Button>
+      </Flex>
     </>
-  ) 
-  // : (
-  //   <>
-  //     <Navbar />
-  //     <Tag>{user}</Tag>
-  //     <Link my={10} href="/login">login page</Link><br />
-  //   </>
-  // );
+  );
 }

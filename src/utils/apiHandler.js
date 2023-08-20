@@ -7,19 +7,18 @@ import {
   setDoc,
   query,
   where,
-  getDocs
+  getDocs,
 } from "firebase/firestore";
 
 export const apiHandler = (() => {
-  
-  const addUserChoices = async (user, choice ) => {
-    try{
+  const addUserChoices = async (user, choice) => {
+    try {
       const restaurantRef = await addDoc(collection(db, "restaurants"), {
         user_id: user.id,
         name: choice.name,
         halal: choice.halal,
       });
-      
+
       const userSnapshot = await getDoc(doc(db, "users", user.id));
       const userRestaurants =
         userSnapshot.data() === undefined ||
@@ -30,13 +29,13 @@ export const apiHandler = (() => {
       userRestaurants.push(restaurantRef.id);
 
       await setDoc(doc(db, "users", user.id), {
+        name: user.name,
         restaurants: userRestaurants,
       });
-      
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-  }
+  };
 
   const getUserChoices = async (user_id) => {
     const userSnapshot = await getDoc(doc(db, "users", user_id));
@@ -55,19 +54,33 @@ export const apiHandler = (() => {
     }
 
     return restaurants;
-  }
+  };
 
   const getRestaurant = async (restaurantName) => {
-    const q = query(collection(db, "restaurants"), where("name", "==", restaurantName))
+    const q = query(
+      collection(db, "restaurants"),
+      where("name", "==", restaurantName)
+    );
     const results = await getDocs(q);
     for (const doc of results.docs) {
       return doc.data();
     }
-  }
+  };
+
+  const getUsers = async () => {
+    const q = query(collection(db, "users"));
+    const results = await getDocs(q);
+    const users = [];
+    for (const doc of results.docs) {
+      users.push(doc.data());
+    }
+    return users;
+  };
 
   return {
     addUserChoices,
     getUserChoices,
     getRestaurant,
-  }
+    getUsers,
+  };
 })();

@@ -5,7 +5,7 @@ import { useEffect } from "react";
 import router from "next/router";
 import { Center, Spinner } from "@chakra-ui/react";
 
-export default function Login(){
+export default function Login() {
   const googleAuth = new GoogleAuthProvider();
   const [user, loading, error] = useAuthState(auth);
   const googleLogin = async () => {
@@ -18,13 +18,13 @@ export default function Login(){
 
   useEffect(() => {
     if (user) {
-      router.push('/')
+      router.push("/");
     }
   }, [user]);
-  
+
   return (
     <>
-    {loading ? (
+      {loading ? (
         <Center mt="300px">
           <Spinner
             thickness="8px"
@@ -34,9 +34,9 @@ export default function Login(){
             boxSize={20}
           />
         </Center>
-      ) :
-      <button onClick={googleLogin}>login</button>
-    }
+      ) : (
+        <button onClick={googleLogin}>login</button>
+      )}
     </>
   );
 }

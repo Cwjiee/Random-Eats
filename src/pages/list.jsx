@@ -37,30 +37,35 @@ export default function List() {
 
   const handleSubmit = async () => {
     console.log(restaurants, halal);
-    await apiHandler.addUserChoices({id: user.uid, name: user.displayName}, { name: restaurants, halal: halal })
+    await apiHandler.addUserChoices(
+      { id: user.uid, name: user.displayName },
+      { name: restaurants, halal: halal }
+    );
     setChoices([...choices, { name: restaurants, halal: halal }]);
     setRestaurants("");
     toast({ title: "Restaurant submitted!", status: "success" });
   };
 
   const handleSearch = async () => {
-    const response = await apiHandler.getRestaurant(restaurants)
-    console.log(response)
+    const response = await apiHandler.getRestaurant(restaurants);
+    console.log(response);
     if (response.name.length === 0) {
       toast({ title: "No restaurant found!", status: "error" });
+    } else if (choices.some((choice) => choice.name === restaurants)) {
+      toast({ title: "Restaurant already added!", status: "error" });
     } else {
       setChoices([...choices, { name: restaurants, halal: halal }]);
       setRestaurants("");
       toast({ title: "Restaurant submitted!", status: "success" });
     }
-  }
+  };
 
-  useEffect(()=> {
-    (async ()=> {
-      const response = await apiHandler.getUserChoices(user.uid)
-      setChoices(response)
+  useEffect(() => {
+    (async () => {
+      const response = await apiHandler.getUserChoices(user.uid);
+      setChoices(response);
     })();
-  }, [])
+  }, []);
 
   return (
     <>
@@ -84,20 +89,43 @@ export default function List() {
             <TabPanels>
               <TabPanel>
                 <Box fontSize={25}>Add new items</Box>
-                <Searchbar choices={choices} restaurants={restaurants} setRestaurants={setRestaurants}/>
-                <Button colorScheme="messenger" w="20%" h={6} p={4} onClick={() => handleSearch()} position="absolute" bottom={40}>
+                <Searchbar
+                  choices={choices}
+                  restaurants={restaurants}
+                  setRestaurants={setRestaurants}
+                />
+                <Button
+                  colorScheme="messenger"
+                  w="20%"
+                  h={6}
+                  p={4}
+                  onClick={() => handleSearch()}
+                  position="absolute"
+                  bottom={40}
+                >
                   add
                 </Button>
               </TabPanel>
               <TabPanel>
-                <Input onChange={(e) => setRestaurants(e.target.value)} value={restaurants}/>
+                <Input
+                  onChange={(e) => setRestaurants(e.target.value)}
+                  value={restaurants}
+                />
                 <RadioGroup onChange={setHalal} value={halal}>
                   <Stack direction="row">
                     <Radio value="true">Non Halal</Radio>
                     <Radio value="false">Halal</Radio>
                   </Stack>
                 </RadioGroup>
-                <Button colorScheme="messenger" w="20%" h={6} p={4} onClick={() => handleSubmit()} position="absolute" bottom={40}>
+                <Button
+                  colorScheme="messenger"
+                  w="20%"
+                  h={6}
+                  p={4}
+                  onClick={() => handleSubmit()}
+                  position="absolute"
+                  bottom={40}
+                >
                   add
                 </Button>
               </TabPanel>

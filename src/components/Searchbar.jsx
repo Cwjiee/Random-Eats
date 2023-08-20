@@ -1,33 +1,40 @@
-import { Box, Input, InputGroup, InputLeftElement, Center, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  Center,
+  VStack,
+} from "@chakra-ui/react";
 import Image from "next/image";
 import Search from "../../public/search.svg";
 import { v4 } from "uuid";
 import Fuse from "fuse.js";
 import { useState, useEffect } from "react";
 
-export default function Searchbar({choices, restaurants, setRestaurants}){
+export default function Searchbar({ choices, restaurants, setRestaurants }) {
   const [searchResult, setSearchResult] = useState([]);
   const fuseOptions = {
     keys: ["name"],
-  }
+  };
   const fuse = new Fuse(choices, fuseOptions);
 
   const search = () => {
-    setSearchResult(fuse.search(restaurants))
-  }
+    setSearchResult(fuse.search(restaurants));
+  };
 
   const handleClick = (e) => {
-    setRestaurants(e.target.innerText)
-    setSearchResult([])
-  }
+    setRestaurants(e.target.innerText);
+    setSearchResult([]);
+  };
 
   useEffect(() => {
-    if(restaurants === searchResult){
-      setSearchResult([])
+    if (restaurants === searchResult) {
+      setSearchResult([]);
     } else {
-      search()
+      search();
     }
-  }, [restaurants])
+  }, [restaurants]);
 
   return (
     <Box w="100%" position="relative">
@@ -78,5 +85,5 @@ export default function Searchbar({choices, restaurants, setRestaurants}){
         </Center>
       )}
     </Box>
-  )
+  );
 }

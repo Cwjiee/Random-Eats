@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { toast } from "@chakra-ui/react";
 
-export default function Profile(){
+export default function Profile() {
   const handleLogout = async () => {
     try {
       await auth.signOut();
@@ -18,7 +18,5 @@ export default function Profile(){
     router.push("/login");
   };
 
-  return (
-    <div>nothing</div>
-  )
+  return <div>nothing</div>;
 }

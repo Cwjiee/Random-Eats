@@ -19,9 +19,9 @@ export default function Navbar(){
   }
 
   return (
-    <Flex bg="#BEE3F8" w="100%" p={4} color="black" h={50} direction="row" alignItems="center" justifyContent="space-between" >
-      <Button onClick={handleHomePage}>
-        back to home page
+    <Flex bg="#2A4365" w="100%" p={4} color="black" h={58} direction="row" alignItems="center" justifyContent="space-between" >
+      <Button onClick={handleHomePage} bg="none" color="white" variant="unstyled" fontSize={20} >
+        Home
       </Button>
       <Button onClick={handleLogout}>
         Logout

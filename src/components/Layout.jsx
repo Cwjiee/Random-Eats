@@ -5,7 +5,9 @@ export default function Layout({ children }) {
   return (
     <>
       <Navbar />
-      <Box p={10} h="100%">{children}</Box>
+      <Box p={10} h="100%">
+        {children}
+      </Box>
     </>
   );
 }
