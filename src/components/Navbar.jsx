@@ -19,7 +19,7 @@ export default function Navbar(){
   }
 
   return (
-    <Flex bg="#2A4365" w="100%" p={4} color="black" h={58} direction="row" alignItems="center" justifyContent="space-between" >
+    <Flex bg="#2A4365" w="100%" p={4} color="black" h="10vh" direction="row" alignItems="center" justifyContent="space-between" >
       <Button onClick={handleHomePage} bg="none" color="white" variant="unstyled" fontSize={20} >
         Home
       </Button>

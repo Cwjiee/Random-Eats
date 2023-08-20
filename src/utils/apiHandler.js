@@ -56,6 +56,16 @@ export const apiHandler = (() => {
     return restaurants;
   };
 
+  const getUserChoicesByName = async (username) => {
+    const name = username.toUpperCase();
+    const q = query(collection(db, "users"), where("name", "==", name));
+
+    const results = await getDocs(q);
+    for (const doc of results.docs) {
+      return doc.data();
+    }
+  };
+
   const getRestaurant = async (restaurantName) => {
     const q = query(
       collection(db, "restaurants"),
@@ -82,5 +92,6 @@ export const apiHandler = (() => {
     getUserChoices,
     getRestaurant,
     getUsers,
+    getUserChoicesByName
   };
 })();
