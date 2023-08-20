@@ -37,6 +37,34 @@ export const apiHandler = (() => {
     }
   };
 
+  const addExistingChoice = async (user, choice) => {
+    try {
+      console.log(choice)
+      const restaurantSnapshot = await getDoc(
+        doc(db, "restaurants", choice.id)
+      );
+      console.log(restaurantSnapshot)
+      
+      const userSnapshot = await getDoc(doc(db, "users", user.id));
+      const userRestaurants =
+        userSnapshot.data() === undefined ||
+        userSnapshot.data().restaurants === undefined
+          ? []
+          : userSnapshot.data().restaurants;
+
+      console.log(restaurantSnapshot)
+      userRestaurants.push(restaurantSnapshot.id);
+      console.log(userRestaurants)
+
+      await setDoc(doc(db, "users", user.id), {
+        name: user.name,
+        restaurants: userRestaurants,
+      });
+    } catch (e) {
+      console.error("Error adding document: ", e);
+    }
+  };
+
   const getUserChoices = async (user_id) => {
     const userSnapshot = await getDoc(doc(db, "users", user_id));
     const userRestaurants =
@@ -73,7 +101,7 @@ export const apiHandler = (() => {
     );
     const results = await getDocs(q);
     for (const doc of results.docs) {
-      return doc.data();
+      return doc;
     }
   };
 
@@ -104,5 +132,6 @@ export const apiHandler = (() => {
     getUsers,
     getUserChoicesByName,
     getRestaurants,
+    addExistingChoice,
   };
 })();

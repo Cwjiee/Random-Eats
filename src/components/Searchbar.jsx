@@ -33,10 +33,11 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
   useEffect(() => {
     (async() => {
       const result = await apiHandler.getRestaurants()
-      for(let res in result){
-        setAllRestaurants(...allRestaurants, res)
+      console.log(result)
+      for(let i=0; i<result.length; i++){
+        const update = result[i];
+        setAllRestaurants(curr => [...curr, update])
       }
-      console.log(allRestaurants)
     })();
   },[])
 

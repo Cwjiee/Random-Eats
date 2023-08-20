@@ -7,16 +7,16 @@ export default function RandomiseResult({selectedUsers}){
 
   useEffect(() => {
     console.log(selectedUsers)
-    const getUser = async() => {
+    (async() => {
       for(let user in selectedUsers){
         const name = user.toUpperCase();
         console.log(name)
         const data = await apiHandler.getUserChoicesByName(name);
         console.log(data)
-        setUserData(...userData, data);
+        setUserData([...userData, data]);
         console.log(userData)
       }
-  }
+    })();
   },[])
 
   return ( 

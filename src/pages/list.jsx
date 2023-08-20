@@ -47,13 +47,18 @@ export default function List() {
   };
 
   const handleSearch = async () => {
-    const response = await apiHandler.getRestaurant(restaurants);
+    const result = await apiHandler.getRestaurant(restaurants);
+    const response = result.data()
     console.log(response);
     if (response.name.length === 0) {
       toast({ title: "No restaurant found!", status: "error" });
     } else if (choices.some((choice) => choice.name === restaurants)) {
       toast({ title: "Restaurant already added!", status: "error" });
     } else {
+      await apiHandler.addExistingChoice(
+        { id: user.uid, name: user.displayName },
+        { id: result.id ,name: restaurants, halal: halal }
+      );
       setChoices([...choices, { name: restaurants, halal: halal }]);
       setRestaurants("");
       toast({ title: "Restaurant submitted!", status: "success" });
