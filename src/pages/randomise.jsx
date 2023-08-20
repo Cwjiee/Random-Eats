@@ -66,7 +66,7 @@ export default function Randomise() {
         <DrawerOverlay />
         <DrawerContent>
           <DrawerCloseButton />
-          <RandomiseResult users={selectedUsers} />
+          <RandomiseResult selectedUsers={selectedUsers} />
         </DrawerContent>
       </Drawer>
       <Flex w="100%" h="75vh">

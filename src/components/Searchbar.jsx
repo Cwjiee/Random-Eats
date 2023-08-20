@@ -11,13 +11,15 @@ import Search from "../../public/search.svg";
 import { v4 } from "uuid";
 import Fuse from "fuse.js";
 import { useState, useEffect } from "react";
+import { apiHandler } from "../utils/apiHandler";
 
 export default function Searchbar({ choices, restaurants, setRestaurants }) {
   const [searchResult, setSearchResult] = useState([]);
+  const [allRestaurants, setAllRestaurants] = useState([])
   const fuseOptions = {
     keys: ["name"],
   };
-  const fuse = new Fuse(choices, fuseOptions);
+  const fuse = new Fuse(allRestaurants, fuseOptions);
 
   const search = () => {
     setSearchResult(fuse.search(restaurants));
@@ -27,6 +29,16 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
     setRestaurants(e.target.innerText);
     setSearchResult([]);
   };
+
+  useEffect(() => {
+    (async() => {
+      const result = await apiHandler.getRestaurants()
+      for(let res in result){
+        setAllRestaurants(...allRestaurants, res)
+      }
+      console.log(allRestaurants)
+    })();
+  },[])
 
   useEffect(() => {
     if (restaurants === searchResult) {

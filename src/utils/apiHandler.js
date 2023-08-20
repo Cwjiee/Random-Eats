@@ -87,11 +87,22 @@ export const apiHandler = (() => {
     return users;
   };
 
+  const getRestaurants = async () => {
+    const q = query(collection(db, "restaurants"))
+    const result = await getDocs(q)
+    const restaurants = [];
+    for(const doc of result.docs){
+      restaurants.push(doc.data());
+    }
+    return restaurants;
+  }
+
   return {
     addUserChoices,
     getUserChoices,
     getRestaurant,
     getUsers,
-    getUserChoicesByName
+    getUserChoicesByName,
+    getRestaurants,
   };
 })();
