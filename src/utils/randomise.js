@@ -1,5 +1,5 @@
-export default function randomise(restaurants){
-  console.log(restaurants)
+export default function randomise(restaurants) {
+  console.log(restaurants);
   const uniqueSet = new Set(restaurants);
   const uniqueArray = Array.from(uniqueSet);
   for (let i = uniqueArray.length - 1; i > 0; i--) {

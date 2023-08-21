@@ -6,11 +6,8 @@ export default function Layout({ children }) {
     <>
       <Box>
         <Navbar />
-        <Box p={10}>
-          {children}
-        </Box>
+        <Box p={10}>{children}</Box>
       </Box>
-      
     </>
   );
 }

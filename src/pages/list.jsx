@@ -1,10 +1,7 @@
 import {
   Box,
-  UnorderedList,
-  ListItem,
   Button,
   Flex,
-  VStack,
   Input,
   Stack,
   Radio,
@@ -15,6 +12,12 @@ import {
   Tab,
   TabPanels,
   TabPanel,
+  Table,
+  Thead,
+  Tbody,
+  Tr,
+  Th,
+  Td,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
@@ -27,7 +30,7 @@ export default function List() {
   const [user, loading, error] = useAuthState(auth);
   const [name, setName] = useState("");
   const toast = useToast();
-  
+
   useEffect(() => {
     if (user) {
       setName(user.displayName);
@@ -51,7 +54,7 @@ export default function List() {
 
   const handleSearch = async () => {
     const result = await apiHandler.getRestaurant(restaurants);
-    const response = result.data()
+    const response = result.data();
     console.log(response);
     if (response.name.length === 0) {
       toast({ title: "No restaurant found!", status: "error" });
@@ -60,7 +63,7 @@ export default function List() {
     } else {
       await apiHandler.addExistingChoice(
         { id: user.uid, name: user.displayName },
-        { id: result.id ,name: restaurants, halal: halal }
+        { id: result.id, name: restaurants, halal: halal }
       );
       setChoices([...choices, { name: restaurants, halal: halal }]);
       setRestaurants("");
@@ -73,30 +76,42 @@ export default function List() {
       const response = await apiHandler.getUserChoices(user.uid);
       setChoices(response);
     })();
-  }, [user.uid]);
+  }, [user]);
 
   return (
     <>
-      <Flex w="100%">
-        <VStack w="50%">
-          <Box m={15}>
-            <Box fontSize={25}>{name.toLowerCase()} Items</Box>
-            <UnorderedList>
+      <Flex w="100%" flexDirection="column">
+        <Box>
+          <Table mb={10}>
+            <Thead>
+              <Tr>
+                <Th>NAME</Th>
+                <Th>HALAL</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
               {choices.map((choice) => (
-                <ListItem key={v4()}>{choice.name}</ListItem>
+                <Tr key={v4()}>
+                  <Td>{choice.name}</Td>
+                  <Td>{choice.halal}</Td>
+                </Tr>
               ))}
-            </UnorderedList>
-          </Box>
-        </VStack>
-        <VStack w="50%" h="100%">
-          <Tabs w="80%">
-            <TabList>
-              <Tab>Search</Tab>
-              <Tab>Add</Tab>
-            </TabList>
-            <TabPanels>
-              <TabPanel>
-                <Box fontSize={25}>Add new items</Box>
+            </Tbody>
+          </Table>
+        </Box>
+        <Tabs w="100%">
+          <TabList>
+            <Tab>Search</Tab>
+            <Tab>Add</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel>
+              <Flex
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                gap={5}
+              >
                 <Searchbar
                   choices={choices}
                   restaurants={restaurants}
@@ -108,38 +123,42 @@ export default function List() {
                   h={6}
                   p={4}
                   onClick={() => handleSearch()}
-                  position="absolute"
-                  bottom={40}
                 >
                   add
                 </Button>
-              </TabPanel>
-              <TabPanel>
+              </Flex>
+            </TabPanel>
+            <TabPanel>
+              <Flex
+                flexDirection="row"
+                justifyContent="center"
+                alignItems="center"
+                gap={5}
+              >
                 <Input
                   onChange={(e) => setRestaurants(e.target.value)}
                   value={restaurants}
                 />
-                <RadioGroup onChange={setHalal} value={halal}>
-                  <Stack direction="row">
-                    <Radio value="true">Non Halal</Radio>
-                    <Radio value="false">Halal</Radio>
-                  </Stack>
-                </RadioGroup>
                 <Button
                   colorScheme="messenger"
                   w="20%"
                   h={6}
                   p={4}
                   onClick={() => handleSubmit()}
-                  position="absolute"
-                  bottom={40}
                 >
                   add
                 </Button>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </VStack>
+              </Flex>
+
+              <RadioGroup onChange={setHalal} value={halal}>
+                <Stack direction="row">
+                  <Radio value="true">Non Halal</Radio>
+                  <Radio value="false">Halal</Radio>
+                </Stack>
+              </RadioGroup>
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
       </Flex>
     </>
   );

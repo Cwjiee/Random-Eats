@@ -10,10 +10,9 @@ const firebaseConfig = {
   storageBucket: "where-to-eat-4cbb5.appspot.com",
   messagingSenderId: "631384321097",
   appId: "1:631384321097:web:33d49bf36eb83d1b97a398",
-  measurementId: "G-9J3WXMJ0MT"
+  measurementId: "G-9J3WXMJ0MT",
 };
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
 export const auth = getAuth(app);
-

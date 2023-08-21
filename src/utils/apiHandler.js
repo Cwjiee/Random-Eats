@@ -14,7 +14,6 @@ export const apiHandler = (() => {
   const addUserChoices = async (user, choice) => {
     try {
       const restaurantRef = await addDoc(collection(db, "restaurants"), {
-        user_id: user.id,
         name: choice.name,
         halal: choice.halal,
       });
@@ -39,11 +38,11 @@ export const apiHandler = (() => {
 
   const addExistingChoice = async (user, choice) => {
     try {
-      console.log(choice)
+      console.log(choice);
       const restaurantSnapshot = await getDoc(
         doc(db, "restaurants", choice.id)
       );
-      console.log(restaurantSnapshot)
+      console.log(restaurantSnapshot);
 
       const userSnapshot = await getDoc(doc(db, "users", user.id));
       const userRestaurants =
@@ -52,9 +51,9 @@ export const apiHandler = (() => {
           ? []
           : userSnapshot.data().restaurants;
 
-      console.log(restaurantSnapshot)
+      console.log(restaurantSnapshot);
       userRestaurants.push(restaurantSnapshot.id);
-      console.log(userRestaurants)
+      console.log(userRestaurants);
 
       await setDoc(doc(db, "users", user.id), {
         name: user.name,
@@ -106,10 +105,9 @@ export const apiHandler = (() => {
   };
 
   const getRestaurantFromId = async (id) => {
-
     const restaurantSnapshot = await getDoc(doc(db, "restaurants", id));
     return restaurantSnapshot.data();
-  }
+  };
 
   const getUsers = async () => {
     const q = query(collection(db, "users"));
@@ -122,14 +120,14 @@ export const apiHandler = (() => {
   };
 
   const getRestaurants = async () => {
-    const q = query(collection(db, "restaurants"))
-    const result = await getDocs(q)
+    const q = query(collection(db, "restaurants"));
+    const result = await getDocs(q);
     const restaurants = [];
-    for(const doc of result.docs){
+    for (const doc of result.docs) {
       restaurants.push(doc.data());
     }
     return restaurants;
-  }
+  };
 
   return {
     addUserChoices,
@@ -139,6 +137,6 @@ export const apiHandler = (() => {
     getUserChoicesByName,
     getRestaurants,
     addExistingChoice,
-    getRestaurantFromId
+    getRestaurantFromId,
   };
 })();

@@ -15,7 +15,7 @@ import { apiHandler } from "../utils/apiHandler";
 
 export default function Searchbar({ choices, restaurants, setRestaurants }) {
   const [searchResult, setSearchResult] = useState([]);
-  const [allRestaurants, setAllRestaurants] = useState([])
+  const [allRestaurants, setAllRestaurants] = useState([]);
   const fuseOptions = {
     keys: ["name"],
   };
@@ -27,21 +27,21 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
   };
 
   useEffect(() => {
-    (async() => {
-      const result = await apiHandler.getRestaurants()
-      console.log(result)
-      for(let i=0; i<result.length; i++){
+    (async () => {
+      const result = await apiHandler.getRestaurants();
+      console.log(result);
+      for (let i = 0; i < result.length; i++) {
         const update = result[i];
-        setAllRestaurants(curr => [...curr, update])
+        setAllRestaurants((curr) => [...curr, update]);
       }
     })();
-  },[])
+  }, []);
 
   useEffect(() => {
-    const search = () => {
+    (() => {
       setSearchResult(fuse.search(restaurants));
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurants, searchResult]);
 
   return (

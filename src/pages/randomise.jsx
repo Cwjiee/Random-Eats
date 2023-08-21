@@ -15,7 +15,7 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure
+  useDisclosure,
 } from "@chakra-ui/react";
 import { apiHandler } from "@/utils/apiHandler";
 import { useState, useEffect } from "react";
@@ -23,7 +23,7 @@ import { v4 } from "uuid";
 import RandomiseResult from "@/components/RandomiseResults";
 
 export default function Randomise() {
-  const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const toast = useToast();
   const [users, setUsers] = useState([]);
   const [selectedUsers, setSelectedUsers] = useState([]);
@@ -58,11 +58,7 @@ export default function Randomise() {
 
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        placement="bottom"
-        onClose={onClose}
-      >
+      <Modal isOpen={isOpen} placement="bottom" onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
           <ModalCloseButton />
