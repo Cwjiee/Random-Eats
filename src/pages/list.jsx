@@ -43,6 +43,10 @@ export default function List() {
   const [choices, setChoices] = useState([]);
 
   const handleSubmit = async () => {
+    if (restaurants.trim().length === 0) {
+      toast({ title: "Cannot submit empty item!", status: "error" });
+      return;
+    }
     await apiHandler.addUserChoices(
       { id: user.uid, name: user.displayName },
       { name: restaurants, halal: halal }
@@ -85,7 +89,7 @@ export default function List() {
       const response = await apiHandler.getUserChoices(user.uid);
       setChoices(response);
     })();
-  }, [user]);
+  }, []);
 
   return (
     <>
@@ -165,7 +169,10 @@ export default function List() {
                   <Td>{choice.name}</Td>
                   <Td>{choice.halal}</Td>
                   <Td>
-                    <DeleteIcon _hover={{cursor: "pointer"}}  onClick={() => handleDelete(choice.name)} />
+                    <DeleteIcon
+                      _hover={{ cursor: "pointer" }}
+                      onClick={() => handleDelete(choice.name)}
+                    />
                   </Td>
                 </Tr>
               ))}
