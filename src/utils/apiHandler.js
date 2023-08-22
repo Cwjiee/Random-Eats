@@ -110,16 +110,6 @@ export const apiHandler = (() => {
     return restaurantSnapshot.data();
   };
 
-  // const getUsers = async () => {
-  //   const q = query(collection(db, "users"));
-  //   const results = await getDocs(q);
-  //   const users = [];
-  //   for (const doc of results.docs) {
-  //     users.push(doc);
-  //   }
-  //   return users;
-  // };
-
   const getUsersData = async () => {
     const q = query(collection(db, "users"));
     const results = await getDocs(q);
@@ -129,6 +119,11 @@ export const apiHandler = (() => {
     }
     return users;
   };
+
+  const getUser = async (userId) => {
+    const result = await getDoc(doc(db, "users", userId));
+    return result;
+  }
 
   const getUsers = async () => {
     const q = query(collection(db, "users"));
@@ -150,26 +145,21 @@ export const apiHandler = (() => {
     return restaurants;
   };
 
-  const deleteRestaurant = async (restaurantName) => {
+  const deleteRestaurant = async (restaurantName, userId) => {
     const restaurant = await getRestaurant(restaurantName);
-    await deleteDoc(doc(db, "restaurants", restaurant.id));
 
-    const users = await getUsers();
-    for (const user of users) {
-      const userSnapshot = await getDoc(doc(db, "users", user.id));
-      const userRestaurants =
-        userSnapshot.data() === undefined ||
-        userSnapshot.data().restaurants === undefined
-          ? []
-          : userSnapshot.data().restaurants;
+    const user = await getUser(userId);
+    const userRestaurants =
+      user.data() === undefined || user.data().restaurants === undefined
+        ? []
+        : user.data().restaurants;
 
-      const filtered = userRestaurants.filter((id) => id !== restaurant.id);
+    const filtered = userRestaurants.filter((id) => id !== restaurant.id);
 
-      await setDoc(doc(db, "users", user.id), {
-        name: user.data().name,
-        restaurants: filtered,
-      });
-    }
+    await setDoc(doc(db, "users", userId), {
+      name: user.data().name,
+      restaurants: filtered,
+    });
   };
 
   return {

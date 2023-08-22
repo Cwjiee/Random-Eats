@@ -72,7 +72,7 @@ export default function List() {
   };
 
   const handleDelete = async (restaurantName) => {
-    await apiHandler.deleteRestaurant(restaurantName);
+    await apiHandler.deleteRestaurant(restaurantName, user.uid);
     const choiceList = choices.filter(
       (choice) => choice.name !== restaurantName
     );
@@ -165,7 +165,7 @@ export default function List() {
                   <Td>{choice.name}</Td>
                   <Td>{choice.halal}</Td>
                   <Td>
-                    <DeleteIcon onClick={() => handleDelete(choice.name)} />
+                    <DeleteIcon _hover={{cursor: "pointer"}}  onClick={() => handleDelete(choice.name)} />
                   </Td>
                 </Tr>
               ))}
