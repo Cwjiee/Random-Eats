@@ -13,7 +13,7 @@ import Fuse from "fuse.js";
 import { useState, useEffect } from "react";
 import { apiHandler } from "../utils/apiHandler";
 
-export default function Searchbar({ choices, restaurants, setRestaurants }) {
+export default function Searchbar({ restaurants, setRestaurants }) {
   const [searchResult, setSearchResult] = useState([]);
   const [allRestaurants, setAllRestaurants] = useState([]);
   const fuseOptions = {
@@ -29,7 +29,6 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
   useEffect(() => {
     (async () => {
       const result = await apiHandler.getRestaurants();
-      console.log(result);
       for (let i = 0; i < result.length; i++) {
         const update = result[i];
         setAllRestaurants((curr) => [...curr, update]);
@@ -41,8 +40,7 @@ export default function Searchbar({ choices, restaurants, setRestaurants }) {
     (() => {
       setSearchResult(fuse.search(restaurants));
     })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurants, searchResult]);
+  }, [restaurants]);
 
   return (
     <Box w="100%" position="relative">

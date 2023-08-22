@@ -15,7 +15,6 @@ import {
   Heading,
   Text,
 } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
@@ -47,7 +46,6 @@ export default function Home() {
             <Tr>
               <Th>NAME</Th>
               <Th>HALAL</Th>
-              <Th></Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -55,9 +53,6 @@ export default function Home() {
               <Tr key={v4()}>
                 <Td>{choice.name}</Td>
                 <Td>{choice.halal}</Td>
-                <Td>
-                  <DeleteIcon />
-                </Td>
               </Tr>
             ))}
           </Tbody>

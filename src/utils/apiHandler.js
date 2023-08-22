@@ -8,6 +8,7 @@ import {
   query,
   where,
   getDocs,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const apiHandler = (() => {
@@ -114,7 +115,7 @@ export const apiHandler = (() => {
     const results = await getDocs(q);
     const users = [];
     for (const doc of results.docs) {
-      users.push(doc.data());
+      users.push(doc);
     }
     return users;
   };
@@ -129,6 +130,28 @@ export const apiHandler = (() => {
     return restaurants;
   };
 
+  const deleteRestaurant = async (restaurantName) => {
+    const restaurant = await getRestaurant(restaurantName);
+    await deleteDoc(doc(db, "restaurants", restaurant.id));
+
+    const users = await getUsers();
+    for (const user of users) {
+      const userSnapshot = await getDoc(doc(db, "users", user.id));
+      const userRestaurants =
+        userSnapshot.data() === undefined ||
+        userSnapshot.data().restaurants === undefined
+          ? []
+          : userSnapshot.data().restaurants;
+
+      const filtered = userRestaurants.filter((id) => id !== restaurant.id);
+
+      await setDoc(doc(db, "users", user.id), {
+        name: user.data().name,
+        restaurants: filtered,
+      });
+    }
+  };
+
   return {
     addUserChoices,
     getUserChoices,
@@ -138,5 +161,6 @@ export const apiHandler = (() => {
     getRestaurants,
     addExistingChoice,
     getRestaurantFromId,
+    deleteRestaurant,
   };
 })();

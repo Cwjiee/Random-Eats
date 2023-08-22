@@ -18,8 +18,8 @@ import {
   Tr,
   Th,
   Td,
-  Spinner,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { apiHandler } from "@/utils/apiHandler";
@@ -43,7 +43,6 @@ export default function List() {
   const [choices, setChoices] = useState([]);
 
   const handleSubmit = async () => {
-    console.log(restaurants, halal);
     await apiHandler.addUserChoices(
       { id: user.uid, name: user.displayName },
       { name: restaurants, halal: halal }
@@ -70,6 +69,15 @@ export default function List() {
       setRestaurants("");
       toast({ title: "Restaurant submitted!", status: "success" });
     }
+  };
+
+  const handleDelete = async (restaurantName) => {
+    await apiHandler.deleteRestaurant(restaurantName);
+    const choiceList = choices.filter(
+      (choice) => choice.name !== restaurantName
+    );
+    setChoices(choiceList);
+    toast({ title: "Restaurant removed!", status: "success" });
   };
 
   useEffect(() => {
@@ -148,6 +156,7 @@ export default function List() {
               <Tr>
                 <Th>NAME</Th>
                 <Th>HALAL</Th>
+                <Th></Th>
               </Tr>
             </Thead>
             <Tbody>
@@ -155,6 +164,9 @@ export default function List() {
                 <Tr key={v4()}>
                   <Td>{choice.name}</Td>
                   <Td>{choice.halal}</Td>
+                  <Td>
+                    <DeleteIcon onClick={() => handleDelete(choice.name)} />
+                  </Td>
                 </Tr>
               ))}
             </Tbody>

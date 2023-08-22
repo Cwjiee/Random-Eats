@@ -49,7 +49,8 @@ export default function Randomise() {
 
   useEffect(() => {
     (async () => {
-      let response = await apiHandler.getUsers();
+      let result = await apiHandler.getUsers();
+      let response = result.data();
       for (let user in response) {
         response[user].name = response[user].name.toLowerCase();
       }
