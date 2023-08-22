@@ -2,7 +2,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebaseConfig";
 import { useState, useEffect } from "react";
 import router from "next/router";
-import { Button, Box, Flex } from "@chakra-ui/react";
+import { Button, Box, Flex, Spinner } from "@chakra-ui/react";
 import { apiHandler } from "@/utils/apiHandler";
 import { v4 } from "uuid";
 import {
@@ -64,7 +64,7 @@ export default function Home() {
         </Table>
       </Box>
 
-      <Flex direction="row" gap={5} mt={10}>
+      <Flex direction="row" gap={5} mt={10} justifyContent="space-between">
         <Button colorScheme="messenger" onClick={toListPage}>
           modify
         </Button>
@@ -75,11 +75,17 @@ export default function Home() {
     </>
   ) : (
     <>
-      <Heading size="xl">Welcome</Heading>
-      <Text letterSpacing={1}>Decide where to eat now!</Text>
-      <Text as="i" fontSize="sm" position="absolute" bottom={5}>
-        *Login with your student acc*
-      </Text>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Heading size="xl">Welcome</Heading>
+          <Text letterSpacing={1}>Decide where to eat now!</Text>
+          <Text as="i" fontSize="sm" position="absolute" bottom={5}>
+            *Login with your student acc*
+          </Text>
+        </>
+      )}
     </>
   );
 }

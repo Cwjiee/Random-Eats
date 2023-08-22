@@ -18,6 +18,7 @@ import {
   Tr,
   Th,
   Td,
+  Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
@@ -80,25 +81,7 @@ export default function List() {
 
   return (
     <>
-      <Flex w="100%" flexDirection="column">
-        <Box>
-          <Table mb={10}>
-            <Thead>
-              <Tr>
-                <Th>NAME</Th>
-                <Th>HALAL</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {choices.map((choice) => (
-                <Tr key={v4()}>
-                  <Td>{choice.name}</Td>
-                  <Td>{choice.halal}</Td>
-                </Tr>
-              ))}
-            </Tbody>
-          </Table>
-        </Box>
+      <Flex w="100%" flexDirection="column" gap={10}>
         <Tabs w="100%">
           <TabList>
             <Tab>Search</Tab>
@@ -159,6 +142,24 @@ export default function List() {
             </TabPanel>
           </TabPanels>
         </Tabs>
+        <Box>
+          <Table mb={10}>
+            <Thead>
+              <Tr>
+                <Th>NAME</Th>
+                <Th>HALAL</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {choices.map((choice) => (
+                <Tr key={v4()}>
+                  <Td>{choice.name}</Td>
+                  <Td>{choice.halal}</Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        </Box>
       </Flex>
     </>
   );

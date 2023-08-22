@@ -60,15 +60,6 @@ export default function Navbar() {
       justifyContent="space-between"
       borderBottomRadius="xl"
     >
-      {/* <Button
-        onClick={handleHomePage}
-        bg="none"
-        color="white"
-        variant="unstyled"
-        fontSize={20}
-      >
-        Home
-      </Button> */}
       <Link
         href="/"
         color="white"

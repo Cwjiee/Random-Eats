@@ -8,15 +8,16 @@ import {
   useToast,
   Button,
   TagCloseButton,
+  TagLeftIcon,
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
   ModalCloseButton,
   useDisclosure,
+  Heading,
+  TagRightIcon,
 } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 import { apiHandler } from "@/utils/apiHandler";
 import { useState, useEffect } from "react";
 import { v4 } from "uuid";
@@ -65,47 +66,64 @@ export default function Randomise() {
           <RandomiseResult selectedUsers={selectedUsers} />
         </ModalContent>
       </Modal>
-      <Flex w="100%" h="75vh">
+      <Flex w="100%" h="75vh" justifyContent="space-between">
         <VStack w="50%">
-          <Box fontSize={25}>Users</Box>
-          <UnorderedList>
+          <Heading fontSize="xl">All Users</Heading>
+          <Flex flexDirection="column" gap={3}>
             {users.map((user) => (
-              <Box key={v4()}>
-                <Tag
-                  size="lg"
-                  colorScheme="cyan"
-                  borderRadius="full"
-                  onClick={handleClick}
-                  _hover={{ cursor: "pointer" }}
-                >
-                  <TagLabel>{user.name}</TagLabel>
-                </Tag>
-              </Box>
+              <Tag
+                key={v4()}
+                size="lg"
+                colorScheme="messenger"
+                borderRadius="full"
+                justifyContent="space-between"
+                variant="outline"
+                py="8px"
+                onClick={handleClick}
+                _hover={{
+                  cursor: "pointer",
+                  textColor: "white",
+                  backgroundColor: "#3a83ff",
+                }}
+              >
+                <TagLabel>{user.name}</TagLabel>
+                <TagRightIcon boxSize="12px" as={AddIcon} />
+              </Tag>
             ))}
-          </UnorderedList>
+          </Flex>
         </VStack>
-        <VStack w="50%" h="100%" position="relative">
-          <Box fontSize={25}>Selected Users</Box>
-          <UnorderedList>
+        <VStack w="50%" h="100%">
+          <Heading fontSize="xl">Selected Users</Heading>
+          <Flex flexDirection="column" gap={3}>
             {selectedUsers.map((user) => (
-              <Tag key={v4()} size="lg" colorScheme="green" borderRadius="full">
+              <Tag
+                key={v4()}
+                size="lg"
+                colorScheme="green"
+                borderRadius="full"
+                justifyContent="center"
+                variant="solid"
+                py="8px"
+                w="full"
+              >
                 <TagLabel>{user.name}</TagLabel>
                 <TagCloseButton onClick={handleRemove} />
               </Tag>
             ))}
-          </UnorderedList>
-          <Button
-            colorScheme="messenger"
-            w="15%"
-            h={6}
-            p={4}
-            position="absolute"
-            bottom={0}
-            onClick={onOpen}
-          >
-            Start
-          </Button>
+          </Flex>
         </VStack>
+        <Button
+          colorScheme="messenger"
+          w="20%"
+          h={6}
+          p={4}
+          position="absolute"
+          bottom="10%"
+          right="40%"
+          onClick={onOpen}
+        >
+          Start
+        </Button>
       </Flex>
     </>
   );
