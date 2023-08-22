@@ -143,8 +143,8 @@ export default function List() {
 
               <RadioGroup onChange={setHalal} value={halal}>
                 <Stack direction="row">
-                  <Radio value="true">Non Halal</Radio>
-                  <Radio value="false">Halal</Radio>
+                  <Radio value="true">Halal</Radio>
+                  <Radio value="false">Non Halal</Radio>
                 </Stack>
               </RadioGroup>
             </TabPanel>
