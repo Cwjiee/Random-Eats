@@ -49,20 +49,16 @@ export default function Randomise() {
 
   useEffect(() => {
     (async () => {
-      let result = await apiHandler.getUsers();
-      let response = result.data();
-      for (let user in response) {
-        response[user].name = response[user].name.toLowerCase();
-      }
+      let response = await apiHandler.getUsersData();
       setUsers(response);
     })();
   }, []);
 
   return (
     <>
-      <Modal isOpen={isOpen} placement="bottom" onClose={onClose}>
+      <Modal isOpen={isOpen} placement="bottom" isCentered onClose={onClose}>
         <ModalOverlay />
-        <ModalContent>
+        <ModalContent p={5} w="80%">
           <ModalCloseButton />
           <RandomiseResult selectedUsers={selectedUsers} />
         </ModalContent>

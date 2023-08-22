@@ -40,6 +40,7 @@ export default function Searchbar({ restaurants, setRestaurants }) {
     (() => {
       setSearchResult(fuse.search(restaurants));
     })();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurants]);
 
   return (

@@ -110,6 +110,26 @@ export const apiHandler = (() => {
     return restaurantSnapshot.data();
   };
 
+  // const getUsers = async () => {
+  //   const q = query(collection(db, "users"));
+  //   const results = await getDocs(q);
+  //   const users = [];
+  //   for (const doc of results.docs) {
+  //     users.push(doc);
+  //   }
+  //   return users;
+  // };
+
+  const getUsersData = async () => {
+    const q = query(collection(db, "users"));
+    const results = await getDocs(q);
+    const users = [];
+    for (const doc of results.docs) {
+      users.push(doc.data());
+    }
+    return users;
+  };
+
   const getUsers = async () => {
     const q = query(collection(db, "users"));
     const results = await getDocs(q);
@@ -118,7 +138,7 @@ export const apiHandler = (() => {
       users.push(doc);
     }
     return users;
-  };
+  }
 
   const getRestaurants = async () => {
     const q = query(collection(db, "restaurants"));
@@ -156,6 +176,7 @@ export const apiHandler = (() => {
     addUserChoices,
     getUserChoices,
     getRestaurant,
+    getUsersData,
     getUsers,
     getUserChoicesByName,
     getRestaurants,
