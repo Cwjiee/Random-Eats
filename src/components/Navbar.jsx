@@ -50,7 +50,7 @@ export default function Navbar() {
 
   return (
     <Flex
-      bg="#2A4365"
+      bg={"gray.500"}
       w="100%"
       p={4}
       color="black"
@@ -58,7 +58,6 @@ export default function Navbar() {
       direction="row"
       alignItems="center"
       justifyContent="space-between"
-      borderBottomRadius="xl"
     >
       <Link
         href="/"
@@ -68,10 +67,8 @@ export default function Navbar() {
       >
         Home
       </Link>
-      {user ? (
-        <Button onClick={handleLogout}>Logout</Button>
-      ) : (
-        <Button onClick={googleLogin}>Login</Button>
+      {user && (
+        <Button onClick={handleLogout} variant={"outline"} color={"blue"} textColor={"blue"}>Logout</Button>
       )}
     </Flex>
   );
