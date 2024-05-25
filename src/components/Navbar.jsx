@@ -10,6 +10,8 @@ import { auth } from "../../firebaseConfig";
 import router from "next/router";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import RandomEatsLogo from '../../public/randomEatsLogo.svg'
+import Image from "next/image";
 
 export default function Navbar() {
   const toast = useToast();
@@ -50,7 +52,6 @@ export default function Navbar() {
 
   return (
     <Flex
-      bg={"gray.500"}
       w="100%"
       p={4}
       color="black"
@@ -58,6 +59,8 @@ export default function Navbar() {
       direction="row"
       alignItems="center"
       justifyContent="space-between"
+      borderBottom="1px"
+      borderBottomColor="blackAlpha.300"
     >
       <Link
         href="/"
@@ -65,10 +68,10 @@ export default function Navbar() {
         fontSize={20}
         _hover={{ textDecoration: "none" }}
       >
-        Home
+        <Image src={RandomEatsLogo} alt="Random Eats Logo" width={80}/>
       </Link>
       {user && (
-        <Button onClick={handleLogout} variant={"outline"} color={"blue"} textColor={"blue"}>Logout</Button>
+        <Button onClick={handleLogout} backgroundColor={"blackAlpha.300"}>Logout</Button>
       )}
     </Flex>
   );

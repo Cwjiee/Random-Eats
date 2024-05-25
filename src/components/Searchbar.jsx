@@ -52,8 +52,8 @@ export default function Searchbar({ restaurants, setRestaurants }) {
         <Input
           value={restaurants}
           placeholder="Search..."
-          borderRadius={"20px"}
-          boxShadow={"md"}
+          borderRadius={"6px"}
+          boxShadow={"base"}
           onChange={(e) => {
             setRestaurants(e.target.value);
           }}
