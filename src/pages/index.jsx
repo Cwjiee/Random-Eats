@@ -18,6 +18,7 @@ import {
 import { apiHandler } from "@/utils/apiHandler";
 import { GoogleAuthProvider } from "firebase/auth";
 import GoogleIcon from "@/components/atoms/GoogleIcon";
+import { v4 } from "uuid";
 
 export default function Home() {
   const [user, loading, error] = useAuthState(auth);
@@ -63,7 +64,7 @@ export default function Home() {
         <Heading mb={"10"} mt={"16"} textAlign={"left"} size={"md"}>History</Heading>
         {items.map((item) => {
           return (
-            <Card my={"4"}>
+            <Card key={v4()} my={"4"}>
               <CardBody>
                 <Text>{item}</Text>
               </CardBody>
