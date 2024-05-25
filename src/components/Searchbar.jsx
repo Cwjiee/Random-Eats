@@ -14,34 +14,34 @@ import { useState, useEffect } from "react";
 import { apiHandler } from "../utils/apiHandler";
 
 export default function Searchbar({ restaurants, setRestaurants }) {
-  const [searchResult, setSearchResult] = useState([]);
-  const [allRestaurants, setAllRestaurants] = useState([]);
-  const fuseOptions = {
-    keys: ["name"],
-  };
-  const fuse = new Fuse(allRestaurants, fuseOptions);
+  // const [searchResult, setSearchResult] = useState([]);
+  // const [allRestaurants, setAllRestaurants] = useState([]);
+  // const fuseOptions = {
+  //   keys: ["name"],
+  // };
+  // const fuse = new Fuse(allRestaurants, fuseOptions);
 
-  const handleClick = (e) => {
-    setRestaurants(e.target.innerText);
-    setSearchResult([]);
-  };
+  // const handleClick = (e) => {
+  //   setRestaurants(e.target.innerText);
+  //   setSearchResult([]);
+  // };
 
-  useEffect(() => {
-    (async () => {
-      const result = await apiHandler.getRestaurants();
-      for (let i = 0; i < result.length; i++) {
-        const update = result[i];
-        setAllRestaurants((curr) => [...curr, update]);
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     const result = await apiHandler.getRestaurants();
+  //     for (let i = 0; i < result.length; i++) {
+  //       const update = result[i];
+  //       setAllRestaurants((curr) => [...curr, update]);
+  //     }
+  //   })();
+  // }, []);
 
-  useEffect(() => {
-    (() => {
-      setSearchResult(fuse.search(restaurants));
-    })();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [restaurants]);
+  // useEffect(() => {
+  //   (() => {
+  //     setSearchResult(fuse.search(restaurants));
+  //   })();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [restaurants]);
 
   return (
     <Box w="100%" position="relative">
@@ -59,7 +59,7 @@ export default function Searchbar({ restaurants, setRestaurants }) {
           }}
         />
       </InputGroup>
-      {searchResult.length > 0 && (
+      {/* {searchResult.length > 0 && (
         <Center position={"absolute"} zIndex={2} w="100%" top="45px">
           <VStack
             bg="white"
@@ -90,7 +90,7 @@ export default function Searchbar({ restaurants, setRestaurants }) {
             ))}
           </VStack>
         </Center>
-      )}
+      )} */}
     </Box>
   );
 }
